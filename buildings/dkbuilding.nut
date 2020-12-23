@@ -1,6 +1,7 @@
 class CDKBuilding extends CBuilding
 {	
 	pFabricator = null;
+	pShipType = null;
 	pShips = null;
 	pShipsMax = null;
 	pCountText = null;
@@ -19,6 +20,15 @@ class CDKBuilding extends CBuilding
 		
 		pType = EBuildingType.DK;
 		
+		if("ShipType" in _info) {
+			pShipType = _info.ShipType;
+		}
+		else
+		{
+			::print("Old type of DKBuilding is creating. Assign default type.");
+			pShipType = 1;
+		}
+
 		pShips = _info.Ships;
 		pShipsMax = _info.ShipsMax;
 
@@ -31,7 +41,7 @@ class CDKBuilding extends CBuilding
 
 		AddChild(pCountText);
 		
-		::print("DKBuilding constructing at : " + _info.I + ", " + _info.J + "\n");
+		::print("DKBuilding type #" + pShipType + " constructing at : " + _info.I + ", " + _info.J + "\n");
 	}
 
 	function UpdateCounter()
@@ -41,7 +51,7 @@ class CDKBuilding extends CBuilding
 	
 	function Serialize()
 	{
-		local item = {Type=this.pType, I=this.I, J=this.J, ShipsMax=this.pShipsMax, Ships=this.pShips};
+		local item = {Type=this.pType, I=this.I, J=this.J, ShipType = this.pShipType, ShipsMax=this.pShipsMax, Ships=this.pShips};
 		
 		return item;
 	}

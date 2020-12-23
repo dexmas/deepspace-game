@@ -80,7 +80,22 @@ class CHQScreen extends CGameScreen
 		}
 		if(bname == "HQScreenPanelpButton4")
 		{
-			::Game.pBaseScreen.Build(::CDKBuilding);
+			::Game.pBaseScreen.Build(::CDKBuilding, 1);
+		}
+		else
+		if(bname == "HQScreenPanelpButton5")
+		{
+			::Game.pBaseScreen.Build(::CDKBuilding, 2);
+		}
+		else
+		if(bname == "HQScreenPanelpButton6")
+		{
+			::Game.pBaseScreen.Build(::CDKBuilding, 3);
+		}
+		else
+		if(bname == "HQScreenPanelpButton7")
+		{
+			::Game.pBaseScreen.Build(::CDKBuilding, 4);
 		}
 		else
 		{

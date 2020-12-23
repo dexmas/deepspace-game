@@ -87,7 +87,7 @@ class CSpaceBaseScreen extends CGameScreen
 		::print("[CSpaceBaseScreen] Loaded\n");
 	}
 	
-	function Build(_class)
+	function Build(_class, _param = -1)
 	{
 		local item = null;
 		
@@ -104,9 +104,9 @@ class CSpaceBaseScreen extends CGameScreen
 		else
 		if(_class == ::CDKBuilding)
 		{
-			local dkinfo = {I=3, J=3, ShipsMax=5, Ships=0};
+			local dkinfo = {I=3, J=3, ShipType=_param, ShipsMax=5, Ships=0};
 			
-			::print("Build module: " + _class + "\n");
+			::print("Build dock type: " + _param + "\n");
 			
 			item = _class(dkinfo);
 			
