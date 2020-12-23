@@ -126,6 +126,11 @@ class CBattleScreen extends CGameScreen
 			pTurnQueue.push(squad.weakref());
 
 			currJ++;
+			if(currJ >= pBattleMap.pSizeJ)
+			{
+				currJ = 0;
+				currI++;
+			}
 		}
 
 		SetupAISquad();
@@ -142,6 +147,11 @@ class CBattleScreen extends CGameScreen
 			pTurnQueue.push(squad.weakref());
 
 			currJ++;
+			if(currJ >= pBattleMap.pSizeJ)
+			{
+				currJ = 0;
+				currI--;
+			}
 		}
 
 		pExitButton = ::CIconButton("data/buttons.png", [128*0,128*0,128,128], null, HandleExitButton, this);
