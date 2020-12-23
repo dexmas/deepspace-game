@@ -314,7 +314,8 @@ class CBattleScreen extends CGameScreen
 
 		if(!pPlayerSquads.len() || !pAISquads.len())
 		{
-			if(pPlayerSquads.len() > 0)
+			local isWin = pPlayerSquads.len() > 0;
+			if(isWin)
 			{
 				//Win
 				::print("!Player won. Point (" + pMapPos.I + ", " + pMapPos.J + ") explored.\n");
@@ -332,8 +333,11 @@ class CBattleScreen extends CGameScreen
 				::print("!Player loose. Point (" + pMapPos.I + ", " + pMapPos.J + ") still unexplored.\n");
 			}
 
+			local lostPlayer = pPlayerSquadsPrototypes.len() - pPlayerSquads.len();
+			local lostAI = pAISquadsPrototypes.len() - pAISquads.len();
+
 			::Game.PushScreen(::Game.pDebrifScreen);
-			::Game.pDebrifScreen.Setup(pPlayerSquads.len() > 0, pPlayerSquads.len(), pAISquads.len());
+			::Game.pDebrifScreen.Setup(isWin, lostPlayer, lostAI);
 		}
 		else
 		if(pCurrentSquad == _squad)
