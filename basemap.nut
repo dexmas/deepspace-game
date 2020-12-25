@@ -7,32 +7,11 @@ enum EBaseTileType
 	BUILDING = 4	// Busy platform
 }
 
-class CBaseMap extends CTileMap2D
+class CBaseMap extends CHexMap
 {
-	cTexturePath = "data/tileset.png";
-	
-	pCameraX = null;
-	pCameraY = null;
-	
-	pSizeI = null;
-	pSizeJ = null;
-	
-	cTileSizeX = 64;
-	cTileSizeY = 56;
-	
 	constructor(_w, _h)
 	{
-		base.constructor();
-		
-		pCameraX = 0.0;
-		pCameraY = 0.0;
-		
-		pSizeI = _w;
-		pSizeJ = _h;
-		
-		Init(3, _w, _h, cTileSizeX, cTileSizeY);
-		
-		SetTexture(::Game.AssetsDB.GetTexture(cTexturePath));
+		base.constructor(_w, _h);
 		
 		RegisterTile(EBaseTileType.SPACE, 0, 0, cTileSizeX, cTileSizeY);
 		RegisterTile(EBaseTileType.BUILDPLACE, 64, 0, cTileSizeX, cTileSizeY);
@@ -100,21 +79,5 @@ class CBaseMap extends CTileMap2D
 				}
 			}
 		}
-	}
-	
-	function Scroll(_dx, _dy)
-	{
-		pCameraX += _dx;
-		pCameraY += _dy;
-		
-		SetPosition(pCameraX, pCameraY);
-	}
-	
-	function SetCamera(_x, _y)
-	{
-		pCameraX = _x;
-		pCameraY = _y;
-		
-		SetPosition(pCameraX, pCameraY);
 	}
 }

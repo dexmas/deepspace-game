@@ -101,12 +101,15 @@ class CBattleScreen extends CGameScreen
 		
 		pBattleMap = ::CBattleMap(13, 7);
 		
-		pScale = 1.5;
-		pBattleMap.SetScale(pScale, pScale);
+		local sz = pBattleMap.GetSize();
+		local kW = ::Game.ScreenWidth / sz.X;
+		local kH = ::Game.ScreenHeight / sz.Y;
+
+		pScale = kW > kH ? kH : kW;
+		pBattleMap.SetScale(pScale);
+		pBattleMap.SetCamera((::Game.ScreenWidth - sz.X * pScale) / 2.0, (::Game.ScreenHeight - sz.Y * pScale) / 2.0);
 		
 		AddChild(pBattleMap);
-		
-		pBattleMap.SetCamera(0.0, 0.0);
 
 		pPlayerSquads = [];
 		pAISquads = [];
@@ -154,14 +157,12 @@ class CBattleScreen extends CGameScreen
 			}
 		}
 
-		pExitButton = ::CIconButton("data/buttons.png", [128*0,128*0,128,128], null, HandleExitButton, this);
+		pExitButton = ::CIconButton(this, "data/buttons.png", [128*0,128*0,128,128], null, HandleExitButton, this);
 		pExitButton.SetPosition(12, ::Game.ScreenHeight - 140);
-		AddChild(pExitButton);
 
-		pNextTurnButton = ::CIconButton("data/buttons.png", [128*1,128*1,128,128], null, HandleNextTurnButton, this);
+		pNextTurnButton = ::CIconButton(this, "data/buttons.png", [128*1,128*1,128,128], null, HandleNextTurnButton, this);
 		pNextTurnButton.SetPosition(::Game.ScreenWidth - 128 - 12, ::Game.ScreenHeight - 140);
 		pNextTurnButton.Lock();
-		AddChild(pNextTurnButton);
 
 		if(!pMapPos)
 		{

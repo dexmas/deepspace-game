@@ -23,12 +23,15 @@ class CMapScreen extends CGameScreen
 		
 		pSpaceMap = ::CSpaceMap(13, 7);
 		
-		pScale = 1.5;
-		pSpaceMap.SetScale(pScale, pScale);
+		local sz = pSpaceMap.GetSize();
+		local kW = ::Game.ScreenWidth / sz.X;
+		local kH = ::Game.ScreenHeight / sz.Y;
+
+		pScale = kW > kH ? kH : kW;
+		pSpaceMap.SetScale(pScale);
+		pSpaceMap.SetCamera((::Game.ScreenWidth - sz.X * pScale) / 2.0, (::Game.ScreenHeight - sz.Y * pScale) / 2.0);
 		
 		AddChild(pSpaceMap);
-		
-		pSpaceMap.SetCamera(0.0, 0.0);
 
 		foreach(tile in ::Game.pDatabase.Map)
 		{
@@ -44,9 +47,8 @@ class CMapScreen extends CGameScreen
 			}
 		}
 
-		pExitButton = ::CIconButton("data/buttons.png", [128*0,128*0,128,128], null, HandleExitButton, this);
+		pExitButton = ::CIconButton(this, "data/buttons.png", [128*0,128*0,128,128], null, HandleExitButton, this);
 		pExitButton.SetPosition(12, ::Game.ScreenHeight - 140);
-		AddChild(pExitButton);
 
 		::Game.PlayBackgroundTrack("data/immortals.ogg");
 		

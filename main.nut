@@ -1,6 +1,7 @@
 
 import("ui/ui.nut")
 
+import("hexmap.nut")
 import("basemap.nut")
 import("battlemap.nut")
 import("spacemap.nut")
@@ -21,8 +22,8 @@ import("screens/hqscreen.nut")
 import("screens/dkscreen.nut")
 import("screens/editpopup.nut")
 import("screens/hudpanel.nut")
-import("screens/map.nut")
-import("screens/battle.nut")
+import("screens/exploremap.nut")
+import("screens/battlescreen.nut")
 import("screens/debrifing.nut")
 
 import("data/localization.nut")

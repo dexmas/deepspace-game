@@ -8,13 +8,16 @@ class CIconButton extends CSprite2D
 	
 	bMouseBtnPressed = null;
 	bLocked = null;
+	pParent = null;
 	
-	constructor(_texture, _frame1, _frame2 = null, _callback = null, _environment = null)
+	constructor(_parent, _texture, _frame1, _frame2 = null, _callback = null, _environment = null)
 	{
 		base.constructor();
 		
 		pFrame1 = _frame1;
 		pFrame2 = _frame2;
+
+		pParent = _parent.weakref();
 		
 		SetTexture(::Game.AssetsDB.GetTexture(_texture));
 		SetFrame(pFrame1[0], pFrame1[1], pFrame1[2], pFrame1[3]);
@@ -26,6 +29,25 @@ class CIconButton extends CSprite2D
 		
 		bMouseBtnPressed = false;
 		bLocked = false;
+
+		pParent.AddChild(this);
+	}
+
+	function SetPosition(_x, _y)
+	{
+		local size = GetSize();
+		local parentSize = pParent.GetSize();
+
+		if(_x != 0 && _x <= 1.0 && _x >= -1.0)
+		{
+			_x = parentSize.X * _x - size.X * 0.5;
+		}
+		if(_y != 0 && _y <= 1.0 && _y >= -1.0)
+		{
+			_y = parentSize.Y * _y - size.Y * 0.5;
+		}
+
+		base.SetPosition(_x, _y);
 	}
 	
 	function SetPressed(pressed)

@@ -27,7 +27,7 @@ class CSpaceBaseScreen extends CGameScreen
 		pBaseMap = ::CBaseMap(9, 7);
 		
 		pScale = ::Game.pDatabase.Camera.Scale;
-		pBaseMap.SetScale(pScale, pScale);
+		pBaseMap.SetScale(pScale);
 		
 		AddChild(pBaseMap);
 		
@@ -76,13 +76,10 @@ class CSpaceBaseScreen extends CGameScreen
 		
 		pBaseMap.SetCamera(::Game.pDatabase.Camera.X, ::Game.pDatabase.Camera.Y);
 
-		pHUDPanel = ::CHUDPanel();
-		AddChild(pHUDPanel);
+		pHUDPanel = ::CHUDPanel(this);
 
-		pButtleButton = ::CIconButton("data/buttons.png", [128*0,128*3,128,128], null, HandleBattleButton, this);
+		pButtleButton = ::CIconButton(this, "data/buttons.png", [128*0,128*3,128,128], null, HandleBattleButton, this);
 		pButtleButton.SetPosition(::Game.ScreenWidth - 140, ::Game.ScreenHeight - 140);
-
-		AddChild(pButtleButton);
 		
 		::print("[CSpaceBaseScreen] Loaded\n");
 	}
@@ -233,7 +230,7 @@ class CSpaceBaseScreen extends CGameScreen
 			if(pScale > 4.0)
 				pScale = 4.0;
 				
-			pBaseMap.SetScale(pScale, pScale);
+			pBaseMap.SetScale(pScale);
 			pBaseMap.Scroll(-p2, -p2);
 
 			::Game.pDatabase.Camera.Scale = pScale;

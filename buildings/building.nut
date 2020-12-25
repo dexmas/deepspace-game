@@ -84,7 +84,7 @@ class CBuilding extends CSprite2D
 			
 		pPos += ::CVector2(_dx / scale, _dy / scale);
 		
-		local tile = pMap.GetTileXY((pPos.X + pMap.pCameraX) * scale, (pPos.Y + pMap.pCameraY) * scale);
+		local tile = pMap.GetTileXY((pPos.X + pMap.pCameraX) * scale - pMap.pCameraX, (pPos.Y + pMap.pCameraY) * scale  - pMap.pCameraY);
 		
 		if(tile)
 		{

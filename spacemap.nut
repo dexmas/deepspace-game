@@ -6,32 +6,11 @@ enum EMapTileType
 	EXPLORED = 3,	// Free platform
 }
 
-class CSpaceMap extends CTileMap2D
+class CSpaceMap extends CHexMap
 {
-	cTexturePath = "data/tileset.png";
-	
-	pCameraX = null;
-	pCameraY = null;
-	
-	pSizeI = null;
-	pSizeJ = null;
-	
-	cTileSizeX = 64;
-	cTileSizeY = 56;
-	
 	constructor(_w, _h)
 	{
-		base.constructor();
-		
-		pCameraX = 0.0;
-		pCameraY = 0.0;
-		
-		pSizeI = _w;
-		pSizeJ = _h;
-		
-		Init(3, _w, _h, cTileSizeX, cTileSizeY);
-		
-		SetTexture(::Game.AssetsDB.GetTexture(cTexturePath));
+		base.constructor(_w, _h);
 		
 		RegisterTile(EMapTileType.SPACE, 0, 0, cTileSizeX, cTileSizeY);
 		RegisterTile(EMapTileType.CANEXPLORE, 64, 0, cTileSizeX, cTileSizeY);
@@ -82,21 +61,5 @@ class CSpaceMap extends CTileMap2D
 				SafeMarkTile(_i+1, _j-1);
 			}
 		}
-	}
-	
-	function Scroll(_dx, _dy)
-	{
-		pCameraX += _dx;
-		pCameraY += _dy;
-		
-		SetPosition(pCameraX, pCameraY);
-	}
-	
-	function SetCamera(_x, _y)
-	{
-		pCameraX = _x;
-		pCameraY = _y;
-		
-		SetPosition(pCameraX, pCameraY);
 	}
 }

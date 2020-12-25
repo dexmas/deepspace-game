@@ -15,15 +15,11 @@ class CEditPopup extends CNode2D
 		fAcceptHandler = _acphdlr;
 		fCancelHandler = _canchdlr;
 		
-		pAcept = ::CIconButton("data/checkmark.png", [0,0,50,50], [50,0,50,50], fAcceptHandler, pEnviropment);
+		pAcept = ::CIconButton(this, "data/checkmark.png", [0,0,50,50], [50,0,50,50], fAcceptHandler, pEnviropment);
 		pAcept.SetPosition(-57, -80);
 		
-		AddChild(pAcept);
-		
-		pCancel = ::CIconButton("data/cross.png", [0,0,50,50], [50,0,50,50], fCancelHandler, pEnviropment);
+		pCancel = ::CIconButton(this, "data/cross.png", [0,0,50,50], [50,0,50,50], fCancelHandler, pEnviropment);
 		pCancel.SetPosition(0, -80);
-		
-		AddChild(pCancel);
 	}
 	
 	function AllowAccept(_allow)

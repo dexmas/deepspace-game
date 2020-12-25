@@ -23,25 +23,21 @@ class CDebrifScreen extends CGameScreen
 	{
 		SetName("DebrifScreen");
 		
-		pPanel = ::CPanel(560, 280, ::GUISkinPanel);
-		pPanel.SetPosition(::Game.ScreenWidth/2.0 - 560.0/2.0, ::Game.ScreenHeight/2.0 - 280.0/2.0);
+		pPanel = ::CPanel(this, 0.8, 0.5, ::GUISkinPanel);
+		pPanel.SetPosition(0.5, 0.5);
 		pPanel.SetName("DebrifScreenPanel");
-		
-		AddChild(pPanel);
 
 		pChaptionText = ::CText2D();
 		pChaptionText.SetFont(::Game.AssetsDB.GetFont("data/gui_font.xml"));
-		pChaptionText.SetPosition(280, 140);
+		pChaptionText.SetPosition(pPanel.GetSize().X / 2.0, pPanel.GetSize().Y / 2.0);
 		pChaptionText.SetAlignment(1,1);
 
 		pPanel.AddChild(pChaptionText);
 		
-		pExit = ::CIconButton("data/cross.png", [0,0,50,50], null, HandleExit, this);
-		pExit.SetPosition(560 - 50, -60);
+		pExit = ::CIconButton(pPanel, "data/cross.png", [0,0,50,50], null, HandleExit, this);
 		pExit.SetScale(2.0,2.0);
+		pExit.SetPosition(1.0, 0.001);
 		pExit.SetName("DebrifScreenExit");
-		
-		pPanel.AddChild(pExit);
 		
 		::print("DebrifScreen screen loaded.\n");
 	}

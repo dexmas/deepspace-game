@@ -7,9 +7,9 @@ class CButton extends CPanel
 	bMouseBtnPressed = null;
 	bLocked = null;
 
-	constructor(text, w, h, skin, callback = null, environment = null)
+	constructor(_parent, text, w, h, skin, callback = null, environment = null)
 	{
-		base.constructor(w, h, skin);
+		base.constructor(_parent, w, h, skin);
 
 		pText = ::CText2D();
 		pText.SetFont(::Game.AssetsDB.GetFont(skin.FontPath));

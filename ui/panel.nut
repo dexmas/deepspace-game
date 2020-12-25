@@ -5,26 +5,35 @@ class CPanel extends CNode2D
 	pCorners = null;
 	pBorders = null;
 	pBackground = null;
-	
+	pParent = null;
 	pSkin = null;
 
-	constructor(_w, _h, _skin)
+	constructor(_parent, _w, _h, _skin)
 	{
 		base.constructor();
 		
 		pSkin = _skin;
+		pParent = _parent.weakref();
 
 		local texture = ::Game.AssetsDB.GetTexture(pSkin.TexturePath);
-		local width = pSkin.Slice9.W;
-		local height = pSkin.Slice9.H;
+		local parentSize = pParent.GetSize();
 		
-		if(_w < width)
+		if(_w <= 1.0)
 		{
-			_w = width;
+			_w = parentSize.X * _w;
 		}
-		if(_h < height)
+		if(_h <= 1.0)
 		{
-			_h = height;
+			_h = parentSize.Y * _h;
+		}
+		
+		if(_w < pSkin.Slice9.W)
+		{
+			_w = pSkin.Slice9.W;
+		}
+		if(_h < pSkin.Slice9.H)
+		{
+			_h = pSkin.Slice9.H;
 		}
 
 		pCorners = [];
@@ -94,20 +103,47 @@ class CPanel extends CNode2D
 		}
 		
 		base.SetSize(_w, _h);
+
+		pParent.AddChild(this);
+	}
+
+	function SetPosition(_x, _y)
+	{
+		local size = this.GetSize();
+		local parentSize = pParent.GetSize();
+
+		if(_x != 0 && _x <= 1.0 && _x >= -1.0)
+		{
+			_x = parentSize.X * _x - size.X * 0.5;
+		}
+		if(_y != 0 && _y <= 1.0 && _y >= -1.0)
+		{
+			_y = parentSize.Y * _y - size.Y * 0.5;
+		}
+
+		base.SetPosition(_x, _y);
 	}
 	
 	function SetSize(_w, _h)
 	{
-		local width = pSkin.Slice9.W;
-		local height = pSkin.Slice9.H;
+		local parentSize = pParent.GetSize();
 		
-		if(_w < width)
+		if(_w <= 1.0)
 		{
-			_w = width;
+			_w = parentSize.X * _w;
 		}
-		if(_h < height)
+		if(_h <= 1.0)
 		{
-			_h = height;
+			_h = parentSize.Y * _h;
+		}
+		
+		if(_w < pSkin.Slice9.W)
+		{
+			_w = pSkin.Slice9.W;
+		}
+		if(_h < pSkin.Slice9.H)
+		{
+			_h = pSkin.Slice9.H;
 		}
 		
 		pBackground.SetSize(_w - pSkin.Slice9.L - pSkin.Slice9.R, _h - pSkin.Slice9.T - pSkin.Slice9.B);

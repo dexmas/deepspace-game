@@ -1,30 +1,35 @@
-class CHUDPanel extends CNode2D
+class CHUDPanel extends CPanel
 {
 	pPanel = null;
 	pENText = null;
 	pDMText = null;
+	pSPText = null;
 	
-	constructor()
+	constructor(_parent)
 	{
-		base.constructor();
-		
-		pPanel = ::CPanel(::Game.ScreenWidth, 50, ::HUDSkinPanel);
-		
+		base.constructor(_parent, 1.0, 50, ::HUDSkinPanel);
+
+		local width = GetSize().X;
+
 		pENText = ::CText2D();
 		pENText.SetFont(::Game.AssetsDB.GetFont("data/gui_font.xml"));
-		pENText.SetPosition(100, 25);
+		pENText.SetPosition(width * 0.1, 25);
 		pENText.SetAlignment(1,1);
 
 		pDMText = ::CText2D();
 		pDMText.SetFont(::Game.AssetsDB.GetFont("data/gui_font.xml"));
-		pDMText.SetPosition(400, 25);
+		pDMText.SetPosition(width * 0.5, 25);
 		pDMText.SetAlignment(1,1);
+
+		pSPText = ::CText2D();
+		pSPText.SetFont(::Game.AssetsDB.GetFont("data/gui_font.xml"));
+		pSPText.SetPosition(width * 0.9, 25);
+		pSPText.SetAlignment(1,1);
 		
-		pPanel.AddChild(pENText);
-		pPanel.AddChild(pDMText);
-		
-		AddChild(pPanel);
-		
+		AddChild(pENText);
+		AddChild(pDMText);
+		AddChild(pSPText);
+			
 		Refresh();
 	}
 	
@@ -32,5 +37,6 @@ class CHUDPanel extends CNode2D
 	{
 		pENText.SetText("EN: " + ::Game.pDatabase.Energy);
 		pDMText.SetText("DM: " + ::Game.pDatabase.Metal);
+		pSPText.SetText("SP: 000");
 	}
 }

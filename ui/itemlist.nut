@@ -26,9 +26,9 @@ class CItemList extends CPanel
 	
 	bVertical = null;
 	
-	constructor(_w, _h, _iw, _ih, _skin, _callback = null, _environment = null, _vert = false)
+	constructor(_parent, _w, _h, _iw, _ih, _skin, _callback = null, _environment = null, _vert = false)
 	{
-		base.constructor(_w, _h, _skin);
+		base.constructor(_parent, _w, _h, _skin);
 		
 		pItems = [];
 		
@@ -39,13 +39,26 @@ class CItemList extends CPanel
 		pItemWidth = _iw;
 		pItemHeight = _ih;
 		pItemSpace = 10;
+
+		local parentSize = pParent.GetSize();
+
+		if(_iw <= 1.0)
+		{
+			pItemWidth = parentSize.X * _iw;
+		}
+		if(_ih <= 1.0)
+		{
+			pItemHeight = parentSize.Y * pItemHeight;
+		}
 		
+		local baseSize = base.GetSize();
+
 		pItemList = ::CNode2D();
 		
 		pItemView = ::CNode2D();
 		pItemView.SetPosition(pItemSpace, pItemSpace);
 		
-		pItemView.SetSize(_w - pItemSpace * 2, pItemHeight);
+		pItemView.SetSize(baseSize.X - pItemSpace * 2, pItemHeight);
 		
 		pScrollSize = 0;
 		pScrollMax = 0;
@@ -61,7 +74,7 @@ class CItemList extends CPanel
 		
 		AddChild(pItemView);
 		
-		SetSize(_w, pScrollBack.GetPosition().Y + pScrollBack.GetSize().Y + pItemSpace);
+		SetSize(baseSize.X, pScrollBack.GetPosition().Y + pScrollBack.GetSize().Y + pItemSpace);
 		
 		pScrollFront.SetEnabled(false);
 		
@@ -82,7 +95,7 @@ class CItemList extends CPanel
 	
 	function AddItem(_name)
 	{
-		local item = ::CButton(_name, pItemWidth, pItemHeight, ::GUISkinButton, HandleButton, this);
+		local item = ::CButton(pItemList, _name, pItemWidth, pItemHeight, ::GUISkinButton, HandleButton, this);
 		
 		item.SetPosition(pLastItemPos, 0);
 		pLastItemPos += (pItemWidth + pItemSpace);
@@ -90,7 +103,6 @@ class CItemList extends CPanel
 		item.SetName(_name);
 		
 		pItems.push(item);
-		pItemList.AddChild(item);
 		
 		UpdateScrollSize();
 		
@@ -181,19 +193,22 @@ class CItemList extends CPanel
 	
 	function InputTouch(id, state, x, y)
 	{
-		if(state == 0)
+		if(HitTest(x, y))
 		{
-			bMovingList = pItemView.HitTest(x,y);
-			bMovingBar = pScrollFront.HitTest(x,y);
-		}
-		else
-		if(state == 2 || state == 3)
-		{
-			bMovingList = false;
-			bMovingBar = false;
-		}
+			if(state == 0)
+			{
+				bMovingList = pItemView.HitTest(x,y);
+				bMovingBar = pScrollFront.HitTest(x,y);
+			}
+			else
+			if(state == 2 || state == 3)
+			{
+				bMovingList = false;
+				bMovingBar = false;
+			}
 		
-		::Game.Input.DropEvent();
+			::Game.Input.DropEvent();
+		}
 	}
 	
 	function InputGesture(type, p1, p2)
@@ -220,8 +235,8 @@ class CItemList extends CPanel
 			{
 				Scroll(-delta);
 			}
+
+			::Game.Input.DropEvent();
 		}
-		
-		::Game.Input.DropEvent();
 	}
 }

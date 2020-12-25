@@ -9,23 +9,19 @@ class CHQScreen extends CGameScreen
 	{
 		SetName("HQScreen");
 		
-		pPanel = ::CPanel(560, 280, ::GUISkinPanel);
-		pPanel.SetPosition(::Game.ScreenWidth/2.0 - 560.0/2.0, ::Game.ScreenHeight/2.0 - 280.0/2.0);
+		pPanel = ::CPanel(this, 0.8, 0.5, ::GUISkinPanel);
+		pPanel.SetPosition(0.5, 0.5);
 		pPanel.SetName("HQScreenPanel");
 		
 		AddChild(pPanel);
 		
-		pExit = ::CIconButton("data/cross.png", [0,0,50,50], null, HandleExit, this);
-		pExit.SetPosition(560 - 50, -60);
+		pExit = ::CIconButton(pPanel, "data/cross.png", [0,0,50,50], null, HandleExit, this);
 		pExit.SetScale(2.0,2.0);
+		pExit.SetPosition(1.0, 0.001);
 		pExit.SetName("HQScreenExit");
 		
-		pItemList = ::CItemList(520, 0, 160, 160, ::RectSkinPanel, HandleListItem, this);
-		pItemList.SetPosition(20, 50);
-		
-		pPanel.AddChild(pItemList);
-		pPanel.AddChild(pExit);
-		
+		pItemList = ::CItemList(pPanel, 0.97, 1.0, 160, 0.66, ::RectSkinPanel, HandleListItem, this);
+		pItemList.SetPosition(0.5, 0.54);
 		
 		local button = pItemList.AddItem("HQScreenPanelpButton1");
 		button.SetText("Build\nPlace");
