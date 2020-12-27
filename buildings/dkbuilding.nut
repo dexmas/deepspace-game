@@ -60,7 +60,10 @@ class CDKBuilding extends CBuilding
 	{	
 		::print("Tap on DK building.\n");
 		
-		::Game.pDKScreen.ShowDock(this);
-		::Game.PushScreen(::Game.pDKScreen);
+		if(bBuilded)
+		{
+			::Game.pDKScreen.ShowDock(this);
+			::Game.PushScreen(::Game.pDKScreen);
+		}
 	}
 }
